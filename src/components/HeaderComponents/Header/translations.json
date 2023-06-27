@@ -1,0 +1,16 @@
+{
+    "pt-BR": {
+        "newPost": "Nova postagem",
+        "chat": "Conversas",
+        "notifications": "Notificações",
+        "settings": "Configurações",
+        "search": "Pesquisar"
+    },
+    "en-US": {
+        "newPost": "New Post",
+        "chat": "Chat",
+        "notifications": "Notifications",
+        "settings": "Settings",
+        "search": "Search"
+    }
+}

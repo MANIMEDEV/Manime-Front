@@ -5,13 +5,15 @@ import { Link } from 'react-router-dom';
 import { UserContext } from '../../../providers/UserContext';
 // import { Container } from './styles';
 
+interface IChatAvatarProps{
+    img: string
+}
+const ChatAvatar: React.FC<IChatAvatarProps> = ({img}) => {
 
-const ChatAvatar: React.FC = () => {
 
-    const user = useContext(UserContext);
     return <>
-        <SAvatar $avatarUrl={user.user!.profileImg}>
-            <h1>{user.user!.nickname[0]}</h1>
+        <SAvatar $avatarUrl={img}>
+            <h1></h1>
         </SAvatar>
     </>
 

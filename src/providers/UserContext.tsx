@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { io } from "socket.io-client";
 import { api } from '../services/api';
+import socket from '../socket';
 
 export interface ILoginResp {
   token: string;
@@ -10,7 +11,7 @@ export interface ILoginResp {
 
 }
 
-interface IProfileInfos{
+interface IProfileInfos {
 
   id: number,
   description: null,
@@ -66,7 +67,6 @@ export interface IUserContext {
   userLogout: () => void;
   userRegister: (formData: IRegisterData) => void;
   getUserProfileInfos: () => void;
-  sendMessage: (message:string) => void;
 }
 
 export const UserContext = createContext({} as IUserContext);
@@ -122,7 +122,7 @@ export const UserProvider = ({ children }: Props) => {
     try {
       const res = await api.post<IRegisterResponse>('/users', formData);
 
-    
+
       if (res.status == 201) {
         const notify = () => {
           toast.success(res.data.message, {
@@ -164,23 +164,20 @@ export const UserProvider = ({ children }: Props) => {
   };
 
   const getUserProfileInfos = async () => {
-  
-      const data = await api.get(`/users/profileInfos/${user!.id}`,{
-        headers:{
-          Authorization: "bear "+ localStorage.getItem('@MANIME:TOKEN')
-        }
-      });
 
-      const newUser = {...user! }
-      newUser.profileInfos =  data.data;
+    const data = await api.get(`/users/profileInfos/${user!.id}`, {
+      headers: {
+        Authorization: "bear " + localStorage.getItem('@MANIME:TOKEN')
+      }
+    });
 
-      setUser(newUser!);
-      
-  }  
+    const newUser = { ...user! }
+    newUser.profileInfos = data.data;
 
-  const sendMessage = (message:string) => {
+    setUser(newUser!);
 
   }
+
 
   //AUTOLOGIN
   useEffect(() => {
@@ -188,7 +185,6 @@ export const UserProvider = ({ children }: Props) => {
     if (Localuser) {
       const result = JSON.parse(Localuser || '');
       setUser(result);
-
       navigate('/');
     } else {
       navigate('/home');
@@ -203,7 +199,6 @@ export const UserProvider = ({ children }: Props) => {
         userLogout,
         userRegister,
         getUserProfileInfos,
-        sendMessage
       }}
     >
       {children}

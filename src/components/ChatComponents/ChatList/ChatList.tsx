@@ -9,18 +9,22 @@ interface IChatList {
     chats: {
         id: number,
         roomId: string
+        userInfos: {
+            name: string,
+            profileImg: string
+        }
     }[]
     userId: string | number
-    setChat: (data:any) => void
+    setChat: (data: any) => void
     chatIsOpen: any | null;
 }
-const ChatList: React.FC<IChatList> = ({chats,setChat,chatIsOpen,userId}) => {
+const ChatList: React.FC<IChatList> = ({ chats, setChat, chatIsOpen, userId }) => {
 
-    chats.forEach(chat => console.log(chat))
-    
-    return <SChatList  isOpen={chatIsOpen}>
-        <NewChat/>
-        {chats.map(chat =>  <ChatItem chat={chat} userId={userId} setChat={setChat}  /> )}
+
+
+    return <SChatList isopen={chatIsOpen}>
+        <NewChat />
+        {chats.map(chat => <ChatItem key={chat.roomId} chat={chat} userId={userId} setChat={setChat} />)}
     </SChatList>;
 }
 

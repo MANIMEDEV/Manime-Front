@@ -6,7 +6,7 @@ export const SBody = styled.form`
     min-height: 60px;
     background-color: transparent;
     position: absolute;
-    bottom: 0;
+    bottom: 0px;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -4,9 +4,8 @@ export const SChat = styled.div`
 
     @media (min-width: 760px) {
     min-width: calc(100% - 310px);
-} 
+    } 
     min-width: 100%;
-    min-height: 100%;
     position:relative;
     background-color: ${props => props.theme.colors.primaryBG};
     .headerChat{
@@ -53,7 +52,7 @@ export const SChat = styled.div`
     .message{
         width: fit-content;
         padding: 10px;
-        background-color: #fff;
+        background-color: ${props => props.theme.colors.gray300};
         max-width: 320px;
         border-radius: 10px;
     }
@@ -66,4 +65,7 @@ export const SChatNone = styled.div`
     min-width: calc(100% - 310px);
     min-height: 100%;
     background-color: ${props => props.theme.colors.primaryBG};
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;

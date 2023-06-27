@@ -5,6 +5,7 @@ import ChatInput from '../ChatInput/ChatInput';
 import { io } from "socket.io-client";
 import socket from "../../../socket";
 import { UserContext } from "../../../providers/UserContext";
+import logo from '../../../assets/Logo.png'
 
 // import { Container } from './styles';
 interface IChat {
@@ -12,6 +13,10 @@ interface IChat {
         userReceived: string | number;
         sender: string | number;
         roomId: string;
+        userInfos: {
+            name: string,
+            profileImg: string
+        }
     } | null;
     setChat: (data: any) => void
 }
@@ -27,17 +32,13 @@ interface IMessage {
 const Chat: React.FC<IChat> = ({ chat, setChat }) => {
     const [messages, setMessages] = useState<IMessage[]>([]);
     const { user } = useContext(UserContext);
-
+    const messagesRef = useRef<HTMLUListElement>(null);
     useEffect(() => {
 
-        console.log('this is chat =>', chat);
-
-        // Manipulador para receber mensagens do servidor
         const handleNewMessage = (obj: any) => {
             setMessages((prevMessages) => [...prevMessages, obj]);
         };
         const handleHistoryMessage = (messages: []) => {
-            console.log(messages);
 
             if (messages == null) {
                 messages = [];
@@ -45,32 +46,26 @@ const Chat: React.FC<IChat> = ({ chat, setChat }) => {
 
             setMessages(messages);
         };
-        // Defina os manipuladores de eventos do Socket.io dentro do useEffect
-
         socket.emit("conectChat", chat?.roomId);
         socket.emit("getHistoryChat", { chatId: chat?.roomId });
-
         socket.on("setHistoryChat", handleHistoryMessage);
         socket.on("receiveMessage", handleNewMessage);
 
-
-
         return () => {
-            // Lembre-se de limpar os manipuladores de eventos ao desmontar o componente
             socket.off("receiveMessage", handleNewMessage);
             socket.off("conectChat");
         };
     }, [, chat]);
 
-
-    const messagesRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        // Scroll automático para baixo quando uma nova mensagem é recebida
+    useEffect(()=>{
         if (messagesRef.current) {
-            messagesRef.current.scrollIntoView({ behavior: 'auto', block: 'end' });
+            const containerHeight = messagesRef.current.clientHeight;
+            const contentHeight = messagesRef.current.scrollHeight;
+            const maxScrollTop = contentHeight - containerHeight;
+            messagesRef.current.scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
         }
-    }, [, messages]);
+    },[,messages]);
+
 
 
     const sendMessage = (newMessage: string) => {
@@ -86,27 +81,26 @@ const Chat: React.FC<IChat> = ({ chat, setChat }) => {
     return <>
         {chat ? <SChat className='Chat isOpen'>
             <div className="headerChat">
-                <ChatAvatar></ChatAvatar>
-                <h3>{'chatInfos.name'}</h3>
+                <ChatAvatar img={chat.userInfos.profileImg}></ChatAvatar>
+                <h3>{chat.userInfos.name}</h3>
 
                 <button className='CloseChat' onClick={() => {
                     setChat(null);
                 }}>X</button>
             </div>
-            <div className="messages" ref={messagesRef}>
-                <ul className="messagesDiv">
+            <div className="messages">
+                <ul className="messagesDiv" ref={messagesRef}>
                     {messages.map((message, index) => (
-                        <li key={index} className={`message ${message.senderId === user!.id ? "userSend" : ""}`}>
+                        <li key={index + "message" + message.id} className={`message ${message.senderId === user!.id ? "userSend" : ""}`}>
                             {message.content}
                         </li>
                     ))}
                 </ul>
             </div>
-
             <ChatInput sendMessage={sendMessage} />
         </SChat> :
             <SChatNone className='Chat'>
-                <h1>TEM PORRA NENHUMA</h1>
+                <img src={logo} alt="" />
             </SChatNone>
         }
     </>;
