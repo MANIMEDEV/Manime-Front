@@ -1,6 +1,8 @@
 import { io, Socket } from "socket.io-client";
 
-const socket: Socket = io("http://192.168.0.235:3000");
+
+const hostUrl: string | undefined = import.meta.env.VITE_HOST_URL;
+const socket: Socket = io("http://"+hostUrl+":3000");
 
 console.log("conectado",socket);
 
