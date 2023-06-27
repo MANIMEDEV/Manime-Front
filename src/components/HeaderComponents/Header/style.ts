@@ -64,6 +64,24 @@ export const SHeader = styled.header`
         justify-content: center;
         cursor: pointer;
         align-items:center;
+        position: relative;
+
+        .notifications{
+            width: 20px;
+            height: 20px;
+            background-color: ${(props) => props.theme.colors.green};
+            border-radius: 50%;
+            display: flex;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 5px;
+            left: 40px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #fff;
+    }
     }
     .menu li:hover{
         
@@ -98,6 +116,8 @@ export const SHeader = styled.header`
             display:none;
         }
     }
+
+
 `;
 
 export const SBg = styled.div`

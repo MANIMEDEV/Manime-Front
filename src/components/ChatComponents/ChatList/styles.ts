@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 interface IProp {
-    isOpen: any;
+    isopen: any;
 }
 export const SChatList = styled.ul<IProp>`
     width: 100%;
@@ -10,7 +10,7 @@ export const SChatList = styled.ul<IProp>`
     flex-direction: column;
     gap:0px;
     overflow-y: auto;
-    ${props => props.isOpen ? "display: none;" : "display:flex;"}
+    ${props => props.isopen ? "display: none;" : "display:flex;"}
     @media (min-width: 760px){
         min-width: 320px;
         max-width: 320px;

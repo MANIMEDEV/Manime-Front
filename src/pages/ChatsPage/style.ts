@@ -25,7 +25,7 @@ export const SContent = styled.div`
 
     @media (min-width: 760px) {
     .Chat{
-        display:block;
+        display:flex;
     }
     }
     `;
