@@ -9,7 +9,6 @@ const fadeIn = keyframes`
     }
 `;
 
-
 export const SHeader = styled.header`
     background-color: ${({ theme }) => theme.colors.primaryBG};
     width: 100%;
@@ -83,11 +82,11 @@ export const SHeader = styled.header`
             color: #fff;
     }
     }
-    .menu li:hover{
-        
-            background-color: ${({ theme }) => theme.colors.secondaryBG};
+    .menu li img:hover{
             color: ${({ theme }) => theme.colors.white};
-    
+            
+            filter: drop-shadow(4px 4px 5px rgba(255,255,255,0.4));
+        
     }
     .desktop{
         position:relative;
@@ -110,6 +109,7 @@ export const SHeader = styled.header`
         padding:10px;
         box-sizing:border-box;
         border-radius: 7px;
+        background-color: ${props => props.theme.colors.secondary}
     }
     @media (min-width: 760px) {
         .IconDescription{

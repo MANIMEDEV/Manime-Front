@@ -4,6 +4,7 @@ import IndexPage from './pages/indexPage/IndexPage';
 import ProtectedRoutes from './pages/protectedRouter';
 import MyProfilePage from './pages/MyProfilePage/MyProfilePage';
 import ChatsPage from './pages/ChatsPage/ChatPages';
+import React from 'react';
 
 
 const Router = () => (

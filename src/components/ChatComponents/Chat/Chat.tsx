@@ -6,6 +6,8 @@ import { io } from "socket.io-client";
 import socket from "../../../socket";
 import { UserContext } from "../../../providers/UserContext";
 import logo from '../../../assets/Logo.png'
+import Message from "../ChatMessage/ChatMessage";
+import { log } from "console";
 
 // import { Container } from './styles';
 interface IChat {
@@ -57,24 +59,29 @@ const Chat: React.FC<IChat> = ({ chat, setChat }) => {
         };
     }, [, chat]);
 
-    useEffect(()=>{
+    useEffect(() => {
         if (messagesRef.current) {
             const containerHeight = messagesRef.current.clientHeight;
             const contentHeight = messagesRef.current.scrollHeight;
             const maxScrollTop = contentHeight - containerHeight;
             messagesRef.current.scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
         }
-    },[,messages]);
+    }, [, messages]);
 
 
 
     const sendMessage = (newMessage: string) => {
+        console.log(newMessage, "nova mensagem");
+
+
+
         const send = {
             senderId: user!.id,
             content: newMessage,
             userReceived: chat!.userReceived,
             roomId: chat!.roomId,
         };
+        console.log("send obj", send);
         setMessages((prevMessages) => [...prevMessages, send]);
         socket.emit("sendMessage", send);
     };
@@ -92,7 +99,7 @@ const Chat: React.FC<IChat> = ({ chat, setChat }) => {
                 <ul className="messagesDiv" ref={messagesRef}>
                     {messages.map((message, index) => (
                         <li key={index + "message" + message.id} className={`message ${message.senderId === user!.id ? "userSend" : ""}`}>
-                            {message.content}
+                            <Message text={message.content} />
                         </li>
                     ))}
                 </ul>

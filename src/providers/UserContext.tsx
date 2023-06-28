@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useEffect, useState } from 'react';
+import React,{ createContext, ReactNode, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { io } from "socket.io-client";
@@ -74,7 +74,6 @@ export const UserContext = createContext({} as IUserContext);
 export const UserProvider = ({ children }: Props) => {
   const navigate = useNavigate();
   const [user, setUser] = useState<IUser | null>(null);
-
 
   const userLogin = async (formData: ILoginData) => {
     try {
@@ -185,6 +184,9 @@ export const UserProvider = ({ children }: Props) => {
     if (Localuser) {
       const result = JSON.parse(Localuser || '');
       setUser(result);
+
+
+
       navigate('/');
     } else {
       navigate('/home');

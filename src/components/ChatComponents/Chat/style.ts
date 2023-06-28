@@ -8,6 +8,8 @@ export const SChat = styled.div`
     min-width: 100%;
     position:relative;
     background-color: ${props => props.theme.colors.primaryBG};
+    border: 3px solid ${props => props.theme.colors.secondary};
+    border-top: 0;
     .headerChat{
         width:100%;
         height:80px;
@@ -48,16 +50,11 @@ export const SChat = styled.div`
         position: relative;
         gap: 10px;
     }
-    
-    .message{
-        width: fit-content;
-        padding: 10px;
-        background-color: ${props => props.theme.colors.gray300};
-        max-width: 320px;
-        border-radius: 10px;
-    }
     .userSend{
-        background-color: ${props => props.theme.colors.green};
+        div{
+            color: #fff;
+            background-color: rgb(43 43 43)
+        }
         align-self: flex-end;
     }
 `;

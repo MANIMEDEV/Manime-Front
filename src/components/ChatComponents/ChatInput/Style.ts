@@ -13,11 +13,15 @@ export const SBody = styled.form`
     border-top: 2px solid  ${props => props.theme.colors.secondaryBG};
     gap: 10px;
     .sendMessage{
-        
+        background-color: transparent;
+        :hover{
+            background-color: ${props => props.theme.colors.secondaryBG};
+        }
     }
     textarea{
         width:90%;
         height: 40px;
+        max-height: 70px;
         box-sizing: border-box;
         padding: 0 15px;
         font-size: 16px;

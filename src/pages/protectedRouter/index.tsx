@@ -4,6 +4,7 @@ import { UserContext } from '../../providers/UserContext';
 import Header from '../../components/HeaderComponents/Header/Header';
 import socket from '../../socket';
 import { toast } from 'react-toastify';
+import React from 'react';
 
 interface IChatNotification {
     chatId: number | string;
