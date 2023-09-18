@@ -4,6 +4,7 @@ import { UserContext } from '../../providers/UserContext';
 import Header from '../../components/HeaderComponents/Header/Header';
 import socket from '../../socket';
 import { toast } from 'react-toastify';
+import React from 'react';
 
 interface IChatNotification {
     chatId: number | string;
@@ -20,13 +21,10 @@ const ProtectedRoutes = () => {
     const [chatNotifications, setChatNotifications] = useState<Array<IChatNotification>>([]);
 
     useEffect(() => {
-        console.log('Tentando conectar');
-
         socket.io.opts.query = { userId: user?.id };
         socket.connect();
 
         return () => {
-            console.log('Desconectando');
             socket.disconnect();
         };
     }, [user]);

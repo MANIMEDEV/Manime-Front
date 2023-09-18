@@ -6,6 +6,7 @@ import { UserContext } from '../../../providers/UserContext';
 // import { Container } from './styles';
 import translations from "./translations.json"
 import { Translation } from "./interface"
+import React from "react";
 
 const Avatar: React.FC = () => {
 
@@ -24,7 +25,7 @@ const Avatar: React.FC = () => {
 
 
     const user = useContext(UserContext);
-    return <>
+    return (
         <SAvatar $avatarUrl={user.user!.profileImg}>
             <h1>{user.user!.nickname[0]}</h1>
             <SAvatarMenuButton className='menuButton' onClick={() => {
@@ -45,7 +46,8 @@ const Avatar: React.FC = () => {
             </ul>
 
         </SAvatar>
-    </>
+    )
+
 
 }
 

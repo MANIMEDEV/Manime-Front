@@ -6,6 +6,7 @@ import { io } from "socket.io-client";
 import socket from "../../../socket";
 import { UserContext } from "../../../providers/UserContext";
 import logo from '../../../assets/Logo.png'
+import Message from "../ChatMessage/ChatMessage";
 
 // import { Container } from './styles';
 interface IChat {
@@ -57,18 +58,19 @@ const Chat: React.FC<IChat> = ({ chat, setChat }) => {
         };
     }, [, chat]);
 
-    useEffect(()=>{
+    useEffect(() => {
         if (messagesRef.current) {
             const containerHeight = messagesRef.current.clientHeight;
             const contentHeight = messagesRef.current.scrollHeight;
             const maxScrollTop = contentHeight - containerHeight;
             messagesRef.current.scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
         }
-    },[,messages]);
+    }, [, messages]);
 
 
 
     const sendMessage = (newMessage: string) => {
+
         const send = {
             senderId: user!.id,
             content: newMessage,
@@ -83,7 +85,6 @@ const Chat: React.FC<IChat> = ({ chat, setChat }) => {
             <div className="headerChat">
                 <ChatAvatar img={chat.userInfos.profileImg}></ChatAvatar>
                 <h3>{chat.userInfos.name}</h3>
-
                 <button className='CloseChat' onClick={() => {
                     setChat(null);
                 }}>X</button>
@@ -92,7 +93,7 @@ const Chat: React.FC<IChat> = ({ chat, setChat }) => {
                 <ul className="messagesDiv" ref={messagesRef}>
                     {messages.map((message, index) => (
                         <li key={index + "message" + message.id} className={`message ${message.senderId === user!.id ? "userSend" : ""}`}>
-                            {message.content}
+                            <Message text={message.content} />
                         </li>
                     ))}
                 </ul>

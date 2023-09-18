@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useEffect, useState } from 'react';
+import React,{ createContext, ReactNode, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { io } from "socket.io-client";
@@ -23,7 +23,7 @@ interface IProfileInfos {
   deletedAt: Date | null
 }
 
-interface IUser {
+export interface IUser {
   id: number,
   fullName: string,
   nickname: string,
@@ -74,7 +74,6 @@ export const UserContext = createContext({} as IUserContext);
 export const UserProvider = ({ children }: Props) => {
   const navigate = useNavigate();
   const [user, setUser] = useState<IUser | null>(null);
-
 
   const userLogin = async (formData: ILoginData) => {
     try {
@@ -165,7 +164,7 @@ export const UserProvider = ({ children }: Props) => {
 
   const getUserProfileInfos = async () => {
 
-    const data = await api.get(`/users/profileInfos/${user!.id}`, {
+    const data = await api.get(`/users/profile/infos`, {
       headers: {
         Authorization: "bear " + localStorage.getItem('@MANIME:TOKEN')
       }
@@ -185,6 +184,9 @@ export const UserProvider = ({ children }: Props) => {
     if (Localuser) {
       const result = JSON.parse(Localuser || '');
       setUser(result);
+
+
+
       navigate('/');
     } else {
       navigate('/home');

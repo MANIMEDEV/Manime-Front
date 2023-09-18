@@ -9,6 +9,7 @@ import notifyIcon from '../../../assets/HeaderAssets/Notification.png'
 import settingsIcon from '../../../assets/HeaderAssets/Settings.png'
 import { Link } from 'react-router-dom';
 import translations from "./translations.json"
+import CreatePost from '../../PostComponents/CreatePost/CreatePost';
 
 interface IChatNotification {
     chatId: number | string;
@@ -21,10 +22,11 @@ interface IHeaderProps {
     chatNotifications: Array<IChatNotification>;
 }
 
-const Header: React.FC<IHeaderProps> = ({notifications, chatNotifications}) => {
+const Header: React.FC<IHeaderProps> = ({ notifications, chatNotifications }) => {
     const [isMenuOpen, setMenuOpen] = useState(false);
     const [screenSize, setScreenSize] = useState({ width: 0 });
     const [translation, setTranslation] = useState(translations['en-US']);
+    const [newPost, setNewPost] = useState(false);
     useEffect(() => {
         setScreenSize({ width: window.innerWidth });
         const handleResize = () => {
@@ -61,38 +63,46 @@ const Header: React.FC<IHeaderProps> = ({notifications, chatNotifications}) => {
         setMenuOpen(!isMenuOpen);
     };
 
-    return (<SBg>
-        <SHeader>
-            {screenSize.width <= 760 ? <HamburgerButton isOpen={isMenuOpen} openMenu={toggleMenu} /> : null}
-            <ul className={`menu ${isMenuOpen ? "show" : "hidden"} ${screenSize.width <= 760 ? "mobile" : "desktop"}`}>
-                <li><input type="text" placeholder={translation.search} /></li>
-                <li><span className='IconDescription'>{translation.newPost}</span> <img src={addPostIcon} alt="" /> </li>
-                <li>
-                    <Link to="/chats">
-                        <span className='IconDescription'>
-                            {translation.chat}
-                        </span>
-                        <img src={chatIcon} alt="" />
-                        {chatNotifications.length > 0 ?
-                            <span className='notifications'>{chatNotifications.length}</span> : null}
+    return (
+        <>
 
-                    </Link>
-                </li>
-                <li>
-                    <span className='IconDescription'>
-                        {translation.notifications} </span>
-                    <img src={notifyIcon} alt="" />
-                    {notifications.length > 0 ? <span className='notifications'>
-                        {notifications.length}
-                    </span> : null}
+            <SBg>
+                <SHeader>
+                    {screenSize.width <= 760 ? <HamburgerButton isOpen={isMenuOpen} openMenu={toggleMenu} /> : null}
+                    <ul className={`menu ${isMenuOpen ? "show" : "hidden"} ${screenSize.width <= 760 ? "mobile" : "desktop"}`}>
+                        <li><input type="text" placeholder={translation.search} /></li>
+                        <li onClick={() => { setNewPost(!newPost) }}><span className='IconDescription'>{translation.newPost}</span> <img src={addPostIcon} alt="" /> </li>
+                        <li>
+                            <Link to="/chats">
+                                <span className='IconDescription'>
+                                    {translation.chat}
+                                </span>
+                                <img src={chatIcon} alt="" />
+                                {chatNotifications.length > 0 ?
+                                    <span className='notifications'>{chatNotifications.length}</span> : null}
 
-                </li>
-                <li><span className='IconDescription'>{translation.settings}</span> <img src={settingsIcon} alt="" /></li>
-            </ul>
-            <Link to="/"> <img src={logo} alt="Logo Manime" className='logo' /> </Link>
-            <Avatar />
-        </SHeader>
-    </SBg>
+                            </Link>
+                        </li>
+                        <li>
+                            <span className='IconDescription'>
+                                {translation.notifications} </span>
+                            <img src={notifyIcon} alt="" />
+                            {notifications.length > 0 ? <span className='notifications'>
+                                {notifications.length}
+                            </span> : null}
+
+                        </li>
+                        <li><span className='IconDescription'>{translation.settings}</span> <img src={settingsIcon} alt="" /></li>
+                    </ul>
+                    <Link to="/"> <img src={logo} alt="Logo Manime" className='logo' /> </Link>
+                    <Avatar />
+                </SHeader>
+            </SBg>
+
+            {newPost ? <CreatePost /> : null}
+
+
+        </>
     );
 }
 

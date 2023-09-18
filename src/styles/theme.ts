@@ -5,8 +5,8 @@ export const mainTheme = {
   colors: {
     primary: '#BDBDBD',
     primaryBG: '#16181F',
-    secondary: '#282D38',
-    secondaryBG: '#282D38',
+    secondaryBG: '#242733',
+    secondary: '#242733',
     gray600: '#333333',
     gray300: '#828282',
     gray150: '#BDBDBD',
@@ -14,6 +14,7 @@ export const mainTheme = {
     gray0: '#F5F5F5',
     white: '#FFFFFF',
     green: '#24C782',
+    blue: '#299FE1',
     feedback: {
       negative: '#E60000',
       warning: '#FFCD07',

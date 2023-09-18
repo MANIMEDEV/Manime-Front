@@ -1,6 +1,4 @@
-import { Link } from "react-router-dom";
 import { keyframes, styled } from "styled-components";
-import Avatar from "./Avatar";
 
 const fadeIn = keyframes`
     from {
