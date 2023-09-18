@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
 import { SNewChat } from './style';
-import { log } from 'console';
-
-// import { Container } from './styles';
 
 interface IContact {
         id: number,
@@ -41,13 +38,8 @@ const NewChat: React.FC<Iprops> = ({ contacts, userId, listChats, setChat }) => 
     };
 
     const verifyChatExist = (userId: number | string, contact: IContact) => {
-        console.log(userId);
-        console.log(contact);
-
         listChats.forEach(chat => {
             const ids = chat.roomId.split("_");
-            console.log("contactID é igual");
-
             if (contact.id == Number(ids[0]) || contact.id == Number(ids[1])) {
                 if (userId == ids[0] || userId == ids[1]) {
 

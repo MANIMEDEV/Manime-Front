@@ -1,14 +1,13 @@
 
 import React, { useEffect, useState } from 'react';
 import { SContainer, SContent } from './style';
-import logo from '../../assets/Logo.png'
-import LoginForm from '../../components/LoginForm/Login.component';
-import RegisterForm from '../../components/RegisterForm/Register.component';
-import Header from '../../components/HeaderComponents/Header/Header';
-import { io } from 'socket.io-client';
 import Post from '../../components/PostComponents/Post/Post';
+import { api } from '../../services/api';
+import { TPosts } from '../../interfaces/post.interfaces';
+import { v4 as uuidv4 } from 'uuid';
 const IndexPage: React.FC = () => {
     const [screenSize, setScreenSize] = useState({ width: 0 });
+    const [posts, setPosts] = useState<TPosts>([])
 
     useEffect(() => {
         setScreenSize({ width: window.innerWidth });
@@ -22,27 +21,33 @@ const IndexPage: React.FC = () => {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
+    useEffect(() => {
+        const getPosts = async () => {
+            const data = await api.get(`/posts`, {
+                headers: {
+                    Authorization: "bear " + localStorage.getItem('@MANIME:TOKEN')
+                }
+            });
+            console.log(data.data);
+            setPosts(data.data);
+
+        }
+        getPosts();
+    }, []);
 
     return (<>
         <SContainer>
             <SContent>
-                <Post description='um post qualquer'
-                imgPost={["https://pm1.aminoapps.com/6377/40e07b8abe0a0f1c6db5d0e5ca501f712251ff13_hq.jpg"]}
-                userName='Usuario Teste'
-                userProfileImg='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWaM6tcij--OwFPQOkh0OyPetDvbFukS7Yi1QIiZ3JUg&s'
-                >
-                    <p>teste2</p>
-                </Post>
-                {/* <Post description='meu primeiro post'
-                userProfileImg="https://pm1.aminoapps.com/6377/40e07b8abe0a0f1c6db5d0e5ca501f712251ff13_hq.jpg"
-                userName='Usuario Teste'
-                imgPost={['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWaM6tcij--OwFPQOkh0OyPetDvbFukS7Yi1QIiZ3JUg&s']}
-                />
-                <Post description='meu Segundo post'
-                userProfileImg="https://pm1.aminoapps.com/6377/40e07b8abe0a0f1c6db5d0e5ca501f712251ff13_hq.jpg"
-                userName='Usuario Teste'
-                imgPost={[]}
-                /> */}
+                {posts.map(post => <Post description={post.description}
+                    id={post.id}
+                    imgs={post.imgs}
+                    numComments={post.numComments}
+                    numLikes={post.numLikes}
+                    user={post.user}
+                    likes={post.likes}
+                    key={uuidv4() + "post"}
+                />)}
+
             </SContent>
         </SContainer>
 

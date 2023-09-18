@@ -21,13 +21,10 @@ const ProtectedRoutes = () => {
     const [chatNotifications, setChatNotifications] = useState<Array<IChatNotification>>([]);
 
     useEffect(() => {
-        console.log('Tentando conectar');
-
         socket.io.opts.query = { userId: user?.id };
         socket.connect();
 
         return () => {
-            console.log('Desconectando');
             socket.disconnect();
         };
     }, [user]);

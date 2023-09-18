@@ -9,8 +9,6 @@ const DisplayProfileInfos: React.FC = () => {
     const { user, getUserProfileInfos } = useContext(UserContext);
     useEffect(() => {
         getUserProfileInfos();
-
-        
     }, []);
     return (<>
         <Banner $BannerUrl={user!.bannerImg}>
@@ -22,7 +20,6 @@ const DisplayProfileInfos: React.FC = () => {
                     <h2 className=''>Seguidores {user!.profileInfos?.numberFollowers}</h2>
                     <h2 className=''>Seguindo {user!.profileInfos?.numberFollowing}</h2>
                 </div>
-
             </div>
         </Banner>
     </>);

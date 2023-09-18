@@ -23,7 +23,7 @@ interface IProfileInfos {
   deletedAt: Date | null
 }
 
-interface IUser {
+export interface IUser {
   id: number,
   fullName: string,
   nickname: string,
@@ -164,7 +164,7 @@ export const UserProvider = ({ children }: Props) => {
 
   const getUserProfileInfos = async () => {
 
-    const data = await api.get(`/users/profileInfos/${user!.id}`, {
+    const data = await api.get(`/users/profile/infos`, {
       headers: {
         Authorization: "bear " + localStorage.getItem('@MANIME:TOKEN')
       }

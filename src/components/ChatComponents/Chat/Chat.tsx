@@ -7,7 +7,6 @@ import socket from "../../../socket";
 import { UserContext } from "../../../providers/UserContext";
 import logo from '../../../assets/Logo.png'
 import Message from "../ChatMessage/ChatMessage";
-import { log } from "console";
 
 // import { Container } from './styles';
 interface IChat {
@@ -71,9 +70,6 @@ const Chat: React.FC<IChat> = ({ chat, setChat }) => {
 
 
     const sendMessage = (newMessage: string) => {
-        console.log(newMessage, "nova mensagem");
-
-
 
         const send = {
             senderId: user!.id,
@@ -81,7 +77,6 @@ const Chat: React.FC<IChat> = ({ chat, setChat }) => {
             userReceived: chat!.userReceived,
             roomId: chat!.roomId,
         };
-        console.log("send obj", send);
         setMessages((prevMessages) => [...prevMessages, send]);
         socket.emit("sendMessage", send);
     };
@@ -90,7 +85,6 @@ const Chat: React.FC<IChat> = ({ chat, setChat }) => {
             <div className="headerChat">
                 <ChatAvatar img={chat.userInfos.profileImg}></ChatAvatar>
                 <h3>{chat.userInfos.name}</h3>
-
                 <button className='CloseChat' onClick={() => {
                     setChat(null);
                 }}>X</button>

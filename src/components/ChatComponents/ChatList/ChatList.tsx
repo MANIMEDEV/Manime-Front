@@ -3,8 +3,6 @@ import ChatItem from '../ChatItem/ChattItem';
 import { SChatList } from './styles';
 import { SNewChat } from '../NewChat/style';
 import NewChat from '../NewChat/NewChat';
-import { log } from 'console';
-
 // import { Container } from './styles';
 interface IChatList {
     chats: {
